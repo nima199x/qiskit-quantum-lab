@@ -1,16 +1,16 @@
 from qiskit import QuantumCircuit
-from qiskit_aer import AerSimulator
-from qiskit.compiler import transpile
-from qiskit.visualization import plot_histogram
-import matplotlib.pyplot as plt
+from utils.runner import run_circuit
 
-# Balanced function: f(x) = x
+
 def oracle_balanced(qc):
-    qc.cx(0, 1)  # CNOT implements f(x) = x
+    """Balanced function: f(x) = x, implemented via CNOT."""
+    qc.cx(0, 1)
 
-# Constant function: f(x) = 0
+
 def oracle_constant(qc):
-    pass  # Do nothing -> output is always 0
+    """Constant function: f(x) = 0 (do nothing)."""
+    pass
+
 
 # Build the Deutsch circuit
 qc = QuantumCircuit(2, 1)
@@ -27,12 +27,4 @@ oracle_constant(qc)   # <- switch to oracle_balanced to test the other case
 qc.h(0)
 qc.measure(0, 0)
 
-# Run the circuit
-simulator = AerSimulator()
-compiled = transpile(qc, simulator)
-result = simulator.run(compiled, shots=1000).result()
-counts = result.get_counts()
-
-print("Result:", counts)
-plot_histogram(counts)
-plt.show()
+run_circuit(qc, shots=1000)
