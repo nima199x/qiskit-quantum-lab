@@ -4,30 +4,30 @@ from qiskit.compiler import transpile
 from qiskit.visualization import plot_histogram
 import matplotlib.pyplot as plt
 
-# تابع متغیر: f(x) = x (می‌خوایم تست کنیم)
+# Balanced function: f(x) = x
 def oracle_balanced(qc):
-    qc.cx(0, 1)  # CNOT: پیاده‌سازی f(x) = x
+    qc.cx(0, 1)  # CNOT implements f(x) = x
 
-# تابع ثابت: f(x) = 0
+# Constant function: f(x) = 0
 def oracle_constant(qc):
-    pass  # هیچ کاری نمی‌کنیم → همیشه خروجی 0
+    pass  # Do nothing -> output is always 0
 
-# ساخت مدار Deutsch
+# Build the Deutsch circuit
 qc = QuantumCircuit(2, 1)
 
-# حالت اولیه
-qc.x(1)         # حالت |1⟩ برای qubit دوم
+# Initial state
+qc.x(1)          # Set qubit 1 to |1>
 qc.h(0)
 qc.h(1)
 
-# انتخاب اوراکل (oracle)
-oracle_constant(qc)   # ← اینو می‌تونی تغییر بدی به oracle_constant
+# Choose the oracle
+oracle_constant(qc)   # <- switch to oracle_balanced to test the other case
 
-# ادامه مدار Deutsch
+# Rest of the Deutsch circuit
 qc.h(0)
 qc.measure(0, 0)
 
-# اجرای مدار
+# Run the circuit
 simulator = AerSimulator()
 compiled = transpile(qc, simulator)
 result = simulator.run(compiled, shots=1000).result()
