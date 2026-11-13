@@ -1,4 +1,5 @@
 from qiskit import QuantumCircuit
+
 from utils.runner import run_circuit
 
 
@@ -12,19 +13,39 @@ def oracle_constant(qc):
     pass
 
 
-# Build the Deutsch circuit
-qc = QuantumCircuit(2, 1)
+def build_deutsch_circuit(oracle):
+    """Build the Deutsch circuit for the given oracle function."""
+    qc = QuantumCircuit(2, 1)
 
-# Initial state
-qc.x(1)          # Set qubit 1 to |1>
-qc.h(0)
-qc.h(1)
+    # Initial state
+    qc.x(1)  # Set qubit 1 to |1>
+    qc.h(0)
+    qc.h(1)
 
-# Choose the oracle
-oracle_constant(qc)   # <- switch to oracle_balanced to test the other case
+    # Oracle
+    oracle(qc)
 
-# Rest of the Deutsch circuit
-qc.h(0)
-qc.measure(0, 0)
+    # Interference + measurement
+    qc.h(0)
+    qc.measure(0, 0)
+    return qc
 
-run_circuit(qc, shots=1000)
+
+def classify(oracle, shots=100, seed=None):
+    """
+    Run Deutsch's algorithm and return "constant" or "balanced".
+
+    Measuring 0 means constant, measuring 1 means balanced. The outcome is
+    deterministic, so every shot should agree.
+    """
+    qc = build_deutsch_circuit(oracle)
+    counts = run_circuit(qc, shots=shots, show_plot=False, seed=seed)
+    return "constant" if counts.get("0", 0) == shots else "balanced"
+
+
+if __name__ == "__main__":
+    for oracle in (oracle_constant, oracle_balanced):
+        qc = build_deutsch_circuit(oracle)
+        print(f"--- {oracle.__name__} ---")
+        counts = run_circuit(qc, shots=1000)
+        print("Verdict:", classify(oracle))
