@@ -17,7 +17,8 @@ qiskit-quantum-lab/
 │   ├── deutsch.py
 │   ├── deutsch_jozsa.py
 │   ├── grover.py
-│   └── teleportation.py
+│   ├── teleportation.py
+│   └── qft.py
 ├── exercises/            # Practice exercises
 │   ├── exam1.py
 │   └── exam2.py
@@ -41,6 +42,7 @@ qiskit-quantum-lab/
 | `algorithms/deutsch_jozsa.py` | Deutsch-Jozsa Algorithm | Generalizes Deutsch to n input qubits, with constant and balanced oracles. |
 | `algorithms/grover.py` | Grover's Algorithm | Searches for a marked bitstring among 2^n items using an oracle and a diffuser. |
 | `algorithms/teleportation.py` | Quantum Teleportation | Transfers an arbitrary qubit state using a Bell pair and two classical bits, and verifies the result. |
+| `algorithms/qft.py` | Quantum Fourier Transform | Builds the n-qubit QFT and its inverse, and uses the inverse QFT to recover a hidden frequency. |
 | `exercises/exam1.py` | Circuit inspection | Builds a simple circuit and prints its structure without running it. |
 | `exercises/exam2.py` | Superposition | Basic single-qubit measurement exercise. |
  
@@ -79,6 +81,7 @@ python -m algorithms.deutsch
 python -m algorithms.deutsch_jozsa
 python -m algorithms.grover
 python -m algorithms.teleportation
+python -m algorithms.qft
 python -m exercises.exam2
 ```
  
@@ -101,8 +104,8 @@ pytest
 - [x] GitHub Actions for automated testing
 - [x] Grover's Algorithm
 - [x] Quantum Teleportation
-- [ ] Quantum Fourier Transform / Shor's Algorithm (stretch goal)
- 
+- [x] Quantum Fourier Transform
+- [ ] Shor's Algorithm (stretch goal)
 ## License
  
 This project is for personal learning purposes.
