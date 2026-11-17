@@ -19,7 +19,8 @@ qiskit-quantum-lab/
 │   ├── grover.py
 │   ├── teleportation.py
 │   ├── qft.py
-│   └── qpe.py
+│   ├── qpe.py
+│   └── shor.py
 ├── exercises/            # Practice exercises
 │   ├── exam1.py
 │   └── exam2.py
@@ -45,6 +46,7 @@ qiskit-quantum-lab/
 | `algorithms/teleportation.py` | Quantum Teleportation | Transfers an arbitrary qubit state using a Bell pair and two classical bits, and verifies the result. |
 | `algorithms/qft.py` | Quantum Fourier Transform | Builds the n-qubit QFT and its inverse, and uses the inverse QFT to recover a hidden frequency. |
 | `algorithms/qpe.py` | Quantum Phase Estimation | Estimates the eigenphase of a phase gate with t counting qubits and the inverse QFT. |
+| `algorithms/shor.py` | Shor's Algorithm | Factors N = 15: quantum period finding (phase estimation on modular multiplication) plus classical continued fractions and gcd. |
 | `exercises/exam1.py` | Circuit inspection | Builds a simple circuit and prints its structure without running it. |
 | `exercises/exam2.py` | Superposition | Basic single-qubit measurement exercise. |
  
@@ -85,6 +87,7 @@ python -m algorithms.grover
 python -m algorithms.teleportation
 python -m algorithms.qft
 python -m algorithms.qpe
+python -m algorithms.shor
 python -m exercises.exam2
 ```
  
@@ -109,7 +112,7 @@ pytest
 - [x] Quantum Teleportation
 - [x] Quantum Fourier Transform
 - [x] Quantum Phase Estimation
-- [ ] Shor's Algorithm (stretch goal)
+- [x] Shor's Algorithm (demonstrated on N = 15)
 ## License
  
 This project is for personal learning purposes.
