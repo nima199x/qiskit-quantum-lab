@@ -9,6 +9,7 @@ reflects all amplitudes about their mean. Repeating this about
 import math
 
 from qiskit import QuantumCircuit
+from qiskit.circuit.library import MCXGate
 
 from utils.runner import run_circuit
 
@@ -16,7 +17,9 @@ from utils.runner import run_circuit
 def _multi_controlled_z(qc, n):
     """Apply Z to qubit n-1 controlled on qubits 0..n-2 (phase flip of |1...1>)."""
     qc.h(n - 1)
-    qc.mcx(list(range(n - 1)), n - 1)
+    # MCXGate lets Qiskit pick the best synthesis; the old qc.mcx() helper
+    # builds every implementation up front and triggers deprecation warnings.
+    qc.append(MCXGate(n - 1), list(range(n)))  # controls 0..n-2, target n-1
     qc.h(n - 1)
 
 
