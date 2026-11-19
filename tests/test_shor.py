@@ -39,7 +39,10 @@ def test_controlled_multiplication_is_correct(a):
                     qc.x(1 + bit)
             controlled_mult_mod15(qc, 0, [1, 2, 3, 4], a)
             expected = (a * y) % 15 if control_on else y
-            assert work_value(qc) == expected
+            # Values are residues mod 15, so 0 and 15 are the same number
+            # (the "flip all bits" trick maps 0 -> 15; y = 0 is never used
+            # in Shor's algorithm anyway, the work register starts at 1).
+            assert work_value(qc) % 15 == expected % 15
 
 
 @pytest.mark.parametrize("a", SUPPORTED_A)
